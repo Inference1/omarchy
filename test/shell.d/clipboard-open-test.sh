@@ -54,6 +54,12 @@ run_open 'https://example.com/file.'
 pass "clipboard open keeps a literal period in a standalone URL"
 
 rm -f "$test_tmp/browser"
+run_open '  https://example.com/file. '
+[[ $(<"$test_tmp/browser") == "https://example.com/file." ]] ||
+  fail "clipboard open keeps a literal period in a standalone URL with surrounding whitespace" "got: $(<"$test_tmp/browser")"
+pass "clipboard open keeps a literal period in a standalone URL with surrounding whitespace"
+
+rm -f "$test_tmp/browser"
 run_open 'plain text without a link'
 [[ ! -e $test_tmp/browser ]] || fail "clipboard open does not launch a browser for plain text"
 [[ $(<"$(<"$test_tmp/editor")") == "plain text without a link" ]] ||

@@ -40,7 +40,7 @@ open_text() {
   local open_file=""
 
   url=$(grep -Eom1 'https?://[^[:space:]"'\''<>]+' <<<"$text" || true)
-  if [[ -n $url && $text != "$url" && $url == *. ]]; then
+  if [[ -n $url && $url == *. && ! $text =~ ^[[:space:]]*"$url"[[:space:]]*$ ]]; then
     url=${url%.}
   fi
   if [[ -z $url && $text =~ ^[[:space:]]*([[:alnum:]][[:alnum:].-]+\.[[:alpha:]]{2,})(/[^[:space:]]*)?[[:space:]]*$ ]]; then
